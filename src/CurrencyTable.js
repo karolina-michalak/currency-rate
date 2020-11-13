@@ -4,10 +4,12 @@ import Form from "./Form";
 
 const CurrencyTable = () => {
   const [items, setItems] = useState([]);
+  const [favItems, setFavItems] = useState([]);
   const [error, setError] = useState(null);
   const [newCurrency, setNewCurrency] = useState("");
   const [newCode, setNewCode] = useState("");
   const [newMid, setNewMid] = useState("");
+  const [newCountry, setNewCountry] = useState("");
 
   useEffect(
     () => {
@@ -22,24 +24,47 @@ const CurrencyTable = () => {
   );
 
   const addItem = () => {
-    setItems([...items, { currency: newCurrency, code: newCode, mid: newMid }]);
+    const filteredCodes = items.map(item => (
+      item.code
+    ))
+if (filteredCodes.includes(newCode.toUpperCase())){
+      alert("Ta waluta już istnieje")
+    }
+
+    else setFavItems([
+      ...favItems,
+      {
+        currency: newCurrency,
+        code: newCode,
+        mid: newMid,
+        country: newCountry,
+      },
+    ]);
+  
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(ValidInput()) return;
-    addItem()
-    clearInputs()
+    if (ValidInput()) return;
+    addItem();
+    clearInputs();
   };
 
   const clearInputs = () => {
-    setNewCurrency('')
-    setNewCode('')
-    setNewMid('')
-  }
+    setNewCurrency("");
+    setNewCode("");
+    setNewMid("");
+    setNewCountry("");
+  };
 
   const ValidInput = () => {
-    return newCurrency.trim() === '' || newCode.trim() === '' || newMid.trim() === ''
+    return (
+      newCurrency.trim() === "" || newCode.trim() === "" || newMid.trim() === ""
+    );
+  };
+
+  const removeItem = (code) => {
+    setFavItems(favItems.filter(item => item.code !== code))
   }
 
   if (error) {
@@ -55,12 +80,30 @@ const CurrencyTable = () => {
           setNewCode={setNewCode}
           newMid={newMid}
           setNewMid={setNewMid}
+          newCountry={newCountry}
+          setNewCountry={setNewCountry}
         />
-
+        <h2>Ulubione:</h2>
+        <div>
+          {favItems.length >= 1 ? (
+            <ul>
+              {favItems.map((item) => (
+                <li key={item.code}>
+                  {item.currency} {item.country ? `(${item.country})` : ""}{" "}
+                  {item.code} {item.mid} <button onClick={() => removeItem(item.code)}>x</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            "nie masz ulubionych"
+          )}
+        </div>
+            <h2>Lista walut:</h2>
         <ul>
           {items.map((item) => (
             <li key={item.code}>
-              {item.currency} {item.code} {item.mid}
+              {item.currency} {item.country ? `(${item.country})` : ""}{" "}
+              {item.code} {item.mid} <button>fav</button>
             </li>
           ))}
         </ul>

@@ -8,7 +8,9 @@ const Form = (props) => {
     setNewCode,
     newMid,
     setNewMid,
-    handleSubmit
+    newCountry,
+    setNewCountry,
+    handleSubmit,
   } = props;
   return (
     <div>
@@ -18,6 +20,12 @@ const Form = (props) => {
           type="text"
           value={newCurrency}
           onChange={(e) => setNewCurrency(e.target.value)}
+        />
+        kraj:{" "}
+        <input
+          type="text"
+          value={newCountry}
+          onChange={(e) => setNewCountry(e.target.value)}
         />
         symbol:{" "}
         <input
