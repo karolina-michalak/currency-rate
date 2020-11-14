@@ -19,28 +19,25 @@ const CurrencyTable = () => {
     },
     (error) => {
       setError(error);
-    },
-    []
+    }, []
   );
 
   const addItem = () => {
-    const filteredCodes = items.map(item => (
-      item.code
-    ))
-if (filteredCodes.includes(newCode.toUpperCase())){
-      alert("Ta waluta już istnieje")
-    }
-
-    else setFavItems([
-      ...favItems,
-      {
-        currency: newCurrency,
-        code: newCode,
-        mid: newMid,
-        country: newCountry,
-      },
-    ]);
-  
+    const filteredCodes = items.map((item) => item.code);
+    if (filteredCodes.includes(newCode.toUpperCase())) {
+      alert("Ta walua już istnieje")}
+   
+    
+      else
+      setFavItems([
+        ...favItems,
+        {
+          currency: newCurrency,
+          code: newCode,
+          mid: newMid,
+          country: newCountry,
+        },
+      ]);
   };
 
   const handleSubmit = (e) => {
@@ -64,8 +61,17 @@ if (filteredCodes.includes(newCode.toUpperCase())){
   };
 
   const removeItem = (code) => {
-    setFavItems(favItems.filter(item => item.code !== code))
+    setFavItems(favItems.filter((item) => item.code !== code));
+  };
+
+  const addToFav = (code) => {
+    console.log(favItems)
+    const favItem = items.filter(item => item.code === code)
+    setFavItems(favItem)
+   
+
   }
+
 
   if (error) {
     return <div>{error.message}</div>;
@@ -90,7 +96,8 @@ if (filteredCodes.includes(newCode.toUpperCase())){
               {favItems.map((item) => (
                 <li key={item.code}>
                   {item.currency} {item.country ? `(${item.country})` : ""}{" "}
-                  {item.code} {item.mid} <button onClick={() => removeItem(item.code)}>x</button>
+                  {item.code} {item.mid}{" "}
+                  <button onClick={() => removeItem(item.code)}>x</button>
                 </li>
               ))}
             </ul>
@@ -98,12 +105,13 @@ if (filteredCodes.includes(newCode.toUpperCase())){
             "nie masz ulubionych"
           )}
         </div>
-            <h2>Lista walut:</h2>
+        <h2>Lista walut:</h2>
         <ul>
           {items.map((item) => (
             <li key={item.code}>
               {item.currency} {item.country ? `(${item.country})` : ""}{" "}
-              {item.code} {item.mid} <button>fav</button>
+              {item.code} {item.mid} 
+              <button onClick={() => addToFav(item.code)}>fav</button>
             </li>
           ))}
         </ul>
