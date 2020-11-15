@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from './style/CurrencyTable.css' 
 import Favorites from "./Favorites";
+import { Card } from 'semantic-ui-react'
+
 
 const CurrencyTable = () => {
   const [currencies, setCurrencies] = useState([]);
@@ -45,10 +47,11 @@ const CurrencyTable = () => {
       />
       <div className='container'>
       <h2>Lista walut:</h2>
-      <ul>
+      <Card.Group>
         {currencies.map((item) => (
-          <li key={item.code}>
-           {item.code} {item.currency}  {item.mid}{" "}
+          <Card key={item.code}>
+            <Card.Content>
+           <Card.Header>{item.code}</Card.Header> <Card.Description>{item.currency}</Card.Description>  <Card.Header>{item.mid}</Card.Header>{" "}
             <i
               onClick={() => {
                 addToFav(item);
@@ -56,9 +59,10 @@ const CurrencyTable = () => {
               class={favs.includes(item) ? "heart icon" : "heart outline icon"}
               
             ></i>
-          </li>
+            </Card.Content>
+          </Card>
         ))}
-      </ul>
+      </Card.Group>
       </div>
     </>
   );
