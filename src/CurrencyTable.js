@@ -22,13 +22,15 @@ const CurrencyTable = () => {
   );
 
   const addToFav = (item) => {
-    setCurrencies(currencies.filter((el) => el !== item));
-    setFavs([...favs, item]);
+    if (favs.includes(item)) {
+      alert("element juz istnieje");
+    } else {
+      setFavs([...favs, currencies.find((el) => el === item)]);
+    }
   };
 
   const removeFav = (item) => {
-    setFavs(favs.filter(el => el !== item))
-    setCurrencies([...currencies, item])
+    setFavs(favs.filter((el) => el !== item));
   };
 
   return (
