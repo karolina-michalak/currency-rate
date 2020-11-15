@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import ModalWindow from "./ModalWindow";
-// import RemoveAllModal from "./RemoveAllModal";
+import styles from './style/CurrencyTable.css' 
 import Favorites from "./Favorites";
 
 const CurrencyTable = () => {
@@ -38,27 +37,30 @@ const CurrencyTable = () => {
   };
 
   return (
-    <div>
+    <>
       <Favorites
         favs={favs}
         removeFav={removeFav}
         removeAllFavs={removeAllFavs}
       />
+      <div className='container'>
       <h2>Lista walut:</h2>
       <ul>
         {currencies.map((item) => (
           <li key={item.code}>
-            {item.currency} {item.code} {item.mid}{" "}
+           {item.code} {item.currency}  {item.mid}{" "}
             <i
               onClick={() => {
                 addToFav(item);
               }}
               class={favs.includes(item) ? "heart icon" : "heart outline icon"}
+              
             ></i>
           </li>
         ))}
       </ul>
-    </div>
+      </div>
+    </>
   );
 };
 
