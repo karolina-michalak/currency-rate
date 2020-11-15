@@ -2,15 +2,13 @@ import React, { useEffect, useState, useRef} from "react";
 import axios from "axios";
 import Form from "./Form";
 import Modall from './Modal'
+import { render } from "@testing-library/react";
 
 const CurrencyTable = () => {
   const [items, setItems] = useState([]);
-  const [favItems, setFavItems] = useState([]);
   const [error, setError] = useState(null);
-  const [newCurrency, setNewCurrency] = useState("");
-  const [newCode, setNewCode] = useState("");
-  const [newMid, setNewMid] = useState("");
-  const [newCountry, setNewCountry] = useState("");
+  const [favs, setFavs] = useState([])
+
 
   useEffect(
     () => {
@@ -23,113 +21,33 @@ const CurrencyTable = () => {
     }, []
   );
 
-  const addItem = () => {
-    const filteredCodes = items.map((item) => item.code);
-    if (filteredCodes.includes(newCode.toUpperCase())) {
-      alert("Ta walua już istnieje")}
+  const addToFav = (item) => {
+    console.log('added to favs')
+    setItems(items.filter(el => el !== item))
+    setFavs([...favs, item])
    
     
-      else
-      setFavItems([
-        ...favItems,
-        {
-          currency: newCurrency,
-          code: newCode,
-          mid: newMid,
-          country: newCountry,
-        },
-      ]);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (ValidInput()) return;
-    addItem();
-    clearInputs();
-  };
-
-  const clearInputs = () => {
-    setNewCurrency("");
-    setNewCode("");
-    setNewMid("");
-    setNewCountry("");
-  };
-
-  const ValidInput = () => {
-    return (
-      newCurrency.trim() === "" || newCode.trim() === "" || newMid.trim() === ""
-    );
-  };
-
-  const removeItem = (code) => {
-    console.log('x')
-    setFavItems(favItems.filter((item) => item.code !== code)); 
-
-    // console.log('xx', favItems)
-
-  };
-
-
-  const addToFav = (code) => {
-    console.log('działa'
-    )
-
   }
 
-
-
-
-
-
-
-
-  if (error) {
-    return <div>{error.message}</div>;
-  } else {
-    return (
-      <div>
-        <Form
-          handleSubmit={handleSubmit}
-          newCurrency={newCurrency}
-          setNewCurrency={setNewCurrency}
-          newCode={newCode}
-          setNewCode={setNewCode}
-          newMid={newMid}
-          setNewMid={setNewMid}
-          newCountry={newCountry}
-          setNewCountry={setNewCountry}
-        />
-        <h2>Ulubione:</h2>
-        <div>
-          {favItems.length >= 1 ? (
-            <ul>
-              {favItems.map((item) => (
-                <li   key={item.code}>
-                  {item.currency} {item.country ? `(${item.country})` : ""}{" "}
-                  {item.code} {item.mid}{" "}
-                  {/* <button onClick={() => removeItem(item.code)}>x</button> */}
-                  <Modall removeItem={removeItem}/>
-
-                </li>
-              ))}
-            </ul>
-          ) : (
-            "nie masz ulubionych"
-          )}
-        </div>
-        <h2>Lista walut:</h2>
-        <ul>
-          {items.map((item) => (
-            <li key={item.code}>
-              {item.currency} {item.country ? `(${item.country})` : ""}{" "}
-              {item.code} {item.mid} 
-              <button onClick={() => addToFav()}>fav</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+  const removeItem = () => {
+    
   }
+
+  return(
+    <div>
+      <h2>Ulubione:</h2>
+      {favs.length > 0 ? favs.map(item => (
+       <li key={item.code}> {item.currency} {item.code} {item.mid}  <button onClick={() => {removeItem()}}>x</button> </li>
+      )) : "nie ma ulubionych"}
+      <h2>Lista walut:</h2>
+      <ul>
+      {items.map(item => (
+        <li key={item.code}>{item.currency} {item.code} {item.mid} <button onClick={() => {addToFav(item)}}>fav</button></li>
+      ))}
+      </ul>
+    </div>
+  )
+
 };
 
 export default CurrencyTable;
