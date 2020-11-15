@@ -33,9 +33,14 @@ const CurrencyTable = () => {
     setFavs(favs.filter((el) => el !== item));
   };
 
+  const removeAllFavs = () => {
+    setFavs([]);
+  };
+
   return (
     <div>
       <h2>Ulubione:</h2>
+
       {favs.length > 0
         ? favs.map((item) => (
             <li key={item.code}>
@@ -51,6 +56,11 @@ const CurrencyTable = () => {
             </li>
           ))
         : "nie ma ulubionych"}
+      {favs.length > 0 ? (
+        <button onClick={() => removeAllFavs()}>remove all</button>
+      ) : (
+        ""
+      )}
       <h2>Lista walut:</h2>
       <ul>
         {currencies.map((item) => (
