@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Header, Modal } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
-const Modall = (props) => {
+const ModalWindow = (props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ const Modall = (props) => {
     >
       <Modal.Content>
         <Modal.Description>
-          <Header> Na pewno chcesz usunąć element z listy ? </Header>{" "}
+          <Header> Na pewno chcesz usunąć walutę {props.item.code} z listy ? </Header>{" "}
         </Modal.Description>{" "}
       </Modal.Content>{" "}
       <Modal.Actions>
@@ -26,7 +26,7 @@ const Modall = (props) => {
           labelPosition="right"
           icon="checkmark"
           onClick={() => {
-            props.removeItem();
+            props.removeFav(props.item);
             setOpen(false);
           }}
           positive
@@ -36,4 +36,4 @@ const Modall = (props) => {
   );
 };
 
-export default Modall;
+export default ModalWindow;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import Form from "./Form";
-import Modall from "./Modal";
+import ModalWindow from "./ModalWindow";
 import { render } from "@testing-library/react";
 
 const CurrencyTable = () => {
@@ -46,13 +45,7 @@ const CurrencyTable = () => {
             <li key={item.code}>
               {" "}
               {item.currency} {item.code} {item.mid}{" "}
-              <button
-                onClick={() => {
-                  removeFav(item);
-                }}
-              >
-                x
-              </button>{" "}
+              <ModalWindow removeFav={removeFav} item={item} />
             </li>
           ))
         : "nie ma ulubionych"}
