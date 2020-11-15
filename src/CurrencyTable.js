@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import axios from "axios";
 import Form from "./Form";
+import Modall from './Modal'
 
 const CurrencyTable = () => {
   const [items, setItems] = useState([]);
@@ -61,16 +62,25 @@ const CurrencyTable = () => {
   };
 
   const removeItem = (code) => {
-    setFavItems(favItems.filter((item) => item.code !== code));
+    console.log('x')
+    setFavItems(favItems.filter((item) => item.code !== code)); 
+
+    // console.log('xx', favItems)
+
   };
 
+
   const addToFav = (code) => {
-    console.log(favItems)
-    const favItem = items.filter(item => item.code === code)
-    setFavItems(favItem)
-   
+    console.log('działa'
+    )
 
   }
+
+
+
+
+
+
 
 
   if (error) {
@@ -94,10 +104,12 @@ const CurrencyTable = () => {
           {favItems.length >= 1 ? (
             <ul>
               {favItems.map((item) => (
-                <li key={item.code}>
+                <li   key={item.code}>
                   {item.currency} {item.country ? `(${item.country})` : ""}{" "}
                   {item.code} {item.mid}{" "}
-                  <button onClick={() => removeItem(item.code)}>x</button>
+                  {/* <button onClick={() => removeItem(item.code)}>x</button> */}
+                  <Modall removeItem={removeItem}/>
+
                 </li>
               ))}
             </ul>
@@ -111,7 +123,7 @@ const CurrencyTable = () => {
             <li key={item.code}>
               {item.currency} {item.country ? `(${item.country})` : ""}{" "}
               {item.code} {item.mid} 
-              <button onClick={() => addToFav(item.code)}>fav</button>
+              <button onClick={() => addToFav()}>fav</button>
             </li>
           ))}
         </ul>
