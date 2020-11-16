@@ -10,7 +10,7 @@ const RemoveAllModal = (props) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button> usuń wszystkie </Button>}
+      trigger={<Button style={{width: '140px', height: '60px'}}> usuń wszystkie </Button>}
     >
       <Modal.Content>
         <Modal.Description>

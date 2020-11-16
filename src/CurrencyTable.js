@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from './style/CurrencyTable.css' 
+import styles from "./style/CurrencyTable.css";
 import Favorites from "./Favorites";
-import { Card } from 'semantic-ui-react'
-
+import { List, Segment } from "semantic-ui-react";
 
 const CurrencyTable = () => {
   const [currencies, setCurrencies] = useState([]);
@@ -24,7 +23,7 @@ const CurrencyTable = () => {
 
   const addToFav = (item) => {
     if (favs.includes(item)) {
-      alert("Waluta już jest na liście ulubionych");
+      alert('element znajduje się na liście')
     } else {
       setFavs([...favs, currencies.find((el) => el === item)]);
     }
@@ -45,24 +44,39 @@ const CurrencyTable = () => {
         removeFav={removeFav}
         removeAllFavs={removeAllFavs}
       />
-      <div className='container'>
-      <h2>Lista walut:</h2>
-      <Card.Group>
-        {currencies.map((item) => (
-          <Card key={item.code}>
-            <Card.Content>
-           <Card.Header>{item.code}</Card.Header> <Card.Description>{item.currency}</Card.Description>  <Card.Header>{item.mid}</Card.Header>{" "}
-            <i
-              onClick={() => {
-                addToFav(item);
-              }}
-              class={favs.includes(item) ? "heart icon" : "heart outline icon"}
-              
-            ></i>
-            </Card.Content>
-          </Card>
-        ))}
-      </Card.Group>
+      <div className="container">
+        <h2>Lista walut:</h2>
+        <Segment
+          inverted
+          style={{
+            width: "40vw",
+            margin: "0 auto",
+            height: "60vh",
+            overflow: "auto",
+          }}
+        >
+          <List divided inverted relaxed>
+            {currencies.map((item) => (
+              <List.Item key={item.code}>
+                <List.Content>
+                  <List.Header>
+                    {item.code} {item.currency}
+                  </List.Header>{" "}
+                  {item.mid}
+                  <i
+                    style={{ color: "yellow" }}
+                    onClick={() => {
+                      addToFav(item);
+                    }}
+                    class={
+                      favs.includes(item) ? "star icon" : "star outline icon"
+                    }
+                  ></i>
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Segment>
       </div>
     </>
   );
