@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import styles from "./style/CurrencyTable.css";
 import Favorites from "./Favorites";
@@ -8,6 +8,7 @@ const CurrencyTable = () => {
   const [currencies, setCurrencies] = useState([]);
   const [error, setError] = useState(null);
   const [favs, setFavs] = useState([]);
+  const firstRender = useRef(true);
 
   useEffect(
     () => {
@@ -20,6 +21,21 @@ const CurrencyTable = () => {
     },
     []
   );
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      localStorage.setItem("Favorite", JSON.stringify([...favs]));
+    }
+  }, [favs]);
+
+  useEffect(() => {
+    if(localStorage.getItem('Favorite') !== null){
+    const newFavs = localStorage.getItem("Favorite");
+    setFavs(JSON.parse([...favs, newFavs]));
+  }}, []);
+
 
   const addToFav = (item) => {
     if (favs.includes(item)) {
